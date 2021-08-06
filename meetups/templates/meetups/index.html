@@ -1,55 +1,38 @@
+{% extends 'meetups/base.html' %}
+
 <!-- this is the Django templating language -->
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>All Meetups</title>
-	<link rel="stylesheet" href="{% static 'meetups/styles/base.css' %}">
-	<link rel="stylesheet" href="{% static 'meetups/styles/all-meetups.css' %}">
-</head>
-<body>
-	<header id="main-header">
-		<nav>
-			<a href="/" id="main-logo">Django Meetups</a>
-		</nav>
-		<h1>We got great meetups coming up!</h1>
-		<p>Find the one that best suits you!</p>
-	</header>
+{% block title_block %}
+	All Meetups
+{% endblock %}
 
-	<main>
-		<section>
-			<h2>Upcoming Meetups:</h2>
-			<ol>
-				{% for item in meetups %}
-				<li class="meetup-item">
-					<article>
-						<div class="meetup-summary">
-							<div class="meetup-image">
-								<img src="" alt="">
-							</div>
-							<div class="meetup-details">
-								<h3>{{ item.title }}</h3>
-								<address>{{ item.location }}</address>
-							</div>
-						</div>
-					<div class="meetup-actions">
-						<!-- <a href="/meetups/{{ item.slug }}" class="btn">More Details</a> -->
-						
-						<!-- NOTE: The url keyword here is used for dynamically generating a URL
-						It needs a parameter value for 'name' in the url path, and one or more following slugs 
-						This way, if we change a URL later in urls.py, we don't have to make corresponding
-						changes in all HTML files that use that URL -->
-						<a href="{% url 'meetup-details' item.slug %}" class="btn">More Details</a>
-					</div>
-					</article>
-				</li>
-				{% endfor %}
-			</ol>
-		</section>
-	</main>
-</body>
-</html>
+{% block site_css %}
+	<link rel="stylesheet" href="{% static 'meetups/styles/all-meetups.css' %}">
+{% endblock %}
+
+{% block main_header %}
+	We got great meetups coming up!
+{% endblock %}
+
+{% block header_content %}
+	<p>Find the one that best suits you!</p>
+{% endblock %}
+
+{% block main_block %}
+	<section>
+		<h2>Upcoming Meetups:</h2>
+		<ol>
+			{% for item in meetups %}
+				<!-- NOTE: This include keyword is used to load content from an existing HTML file.
+				This is typically used when we have a block of HTML code that we expect to be reused
+				across multiple HTML files. We can create this content in as separate HTML file, and
+				include it everywhere that we want instead of duplicating code in all those files. -->
+
+				<!-- NOTE: You can make this dynamic by specifying the variables used in that included
+				HTML file here in the include statement -->
+				{% include 'meetups/include-meetup-item.html' with title=item.title location=item.location %}
+			{% endfor %}
+		</ol>
+	</section>
+{% endblock %}
