@@ -2,7 +2,7 @@
 	<article>
 		<div class="meetup-summary">
 			<div class="meetup-image">
-				<img src="" alt="">
+				<img src="{{ image }}" alt="{{ title }}">
 			</div>
 			<div class="meetup-details">
 				<h3>{{ title }}</h3>
@@ -13,10 +13,10 @@
 		<!-- <a href="/meetups/{{ item.slug }}" class="btn">More Details</a> -->
 
 		<!-- NOTE: The url keyword here is used for dynamically generating a URL
-		It needs a parameter value for 'name' in the url path, and one or more following slugs 
+		It needs a parameter value for 'name' in the url path (this is from urls.py), and one or more following slugs. 
 		This way, if we change a URL later in urls.py, we don't have to make corresponding
 		changes in all HTML files that use that URL -->
-		<a href="{% url 'meetup-details' item.slug %}" class="btn">More Details</a>
+		<a href="{% url 'meetup-details' slug %}" class="btn">More Details</a>
 	</div>
 	</article>
 </li>

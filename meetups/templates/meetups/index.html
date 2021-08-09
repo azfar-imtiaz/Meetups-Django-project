@@ -31,7 +31,7 @@
 
 				<!-- NOTE: You can make this dynamic by specifying the variables used in that included
 				HTML file here in the include statement -->
-				{% include 'meetups/include-meetup-item.html' with title=item.title location=item.location %}
+				{% include 'meetups/include-meetup-item.html' with title=item.title image=item.image.url location="New York" slug=item.slug %}
 			{% endfor %}
 		</ol>
 	</section>
